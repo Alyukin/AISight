@@ -1,1 +1,50 @@
-Info
+For backend
+git clone https://github.com/your-username/project-name.git
+cd aisight/backend
+
+ Linux/Mac:
+python -m venv venv
+source venv/bin/activate
+
+ Windows:
+python -m venv venv
+venv\Scripts\activate
+
+pip install -r requirements.txt
+
+2. Запуск сервра FastAPI
+uvicorn main:app --reload --port 8000
+
+
+Запустить сервер:
+
+http://127.0.0.1:8000
+
+
+Проверить через Swagger UI:
+
+http://127.0.0.1:8000/docs
+
+
+
+Frontend (Vue) отправляет DICOM через POST /predict и получает JSON
+
+{
+  "prediction": "pathology",
+  "confidence": 0.87,
+  "heatmap": "data:image/png;base64,..."
+}
+
+End
+
+
+
+
+-----------------------------------------------------------
+        Запуск проекта 
+        docker-compose up --build
+
+
+        FastAPI доступен: http://localhost:8000
+
+        Vue-приложение доступно: http://localhost:5173
