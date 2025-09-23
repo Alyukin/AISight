@@ -4,13 +4,11 @@ pydantic==2.7.1
 pillow==10.3.0
 pydicom==2.4.4
 numpy==1.26.4
+python-multipart==0.0.6
 
-# PyTorch — CPU версия (если нужна GPU, ставить отдельно)
-torch==2.1.0
-torchvision==0.16.1
+# Let pip resolve compatible versions (remove specific versions)
+torch
+torchvision
 
 # MONAI
-monai==1.2.1
-
-# Дополнительно (для удобного работы с zip, если будут папки DICOM)
-python-multipart==0.0.6
+monai==1.5.1
