@@ -1,4 +1,5 @@
-For backend
+Запуск для backend
+
 git clone https://github.com/your-username/project-name.git
 cd aisight/backend
 
@@ -41,7 +42,6 @@ End
 
 
 -----------------------------------------------------------
-        Запуск проекта 
         docker-compose up --build
 
 
