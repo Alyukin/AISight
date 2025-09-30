@@ -1,53 +1,55 @@
-<template>
-  <div class="p-4">
-    <h1 class="text-xl font-bold mb-4">DICOM Viewer</h1>
-
-    <!-- Загрузка файла -->
-    <input type="file" @change="onFileChange" accept=".dcm" class="mb-4" />
-
-    <!-- Контейнер для отображения изображения -->
-    <div
-      ref="dicomElement"
-      class="w-[512px] h-[512px] border border-gray-300 relative"
-    ></div>
-  </div>
-</template>
-
 <script setup>
-import { ref, onMounted } from 'vue'
-
-// Cornerstone и утилиты
-import cornerstone from 'cornerstone-core'
-import dicomParser from 'dicom-parser'
-import cornerstoneWADOImageLoader from 'cornerstone-wado-image-loader'
-
-const dicomElement = ref(null)
-
-// Настройка Cornerstone WADO Loader
-cornerstoneWADOImageLoader.external.cornerstone = cornerstone
-cornerstoneWADOImageLoader.configure({
-  beforeSend: function(xhr) {
-    // Можно добавить заголовки, если нужно
-  },
-})
-
-// Функция обработки выбора файла
-const onFileChange = (event) => {
-  const file = event.target.files[0]
-  if (!file) return
-
-  const imageId = cornerstoneWADOImageLoader.wadouri.fileManager.add(file)
-  cornerstone.loadImage(imageId).then((image) => {
-    cornerstone.displayImage(dicomElement.value, image)
-  })
-}
-
-// Включаем элемент для Cornerstone после монтирования компонента
-onMounted(() => {
-  cornerstone.enable(dicomElement.value)
-})
+import DicomViewer from './DicomViewer.vue'
 </script>
 
-<style scoped>
-/* Немного стилей для контейнера */
-</style>
+<template>
+  <div class="app__section">   
+    <header class="container inter__bold text-[clamp(20px,4vw,30px)] text-[#f0f0f0]">
+      <h1 class="drop__shadow">AISight</h1>
+    </header>
+  
+    <div class="container inter__bold text-[clamp(28px,6vw,60px)] mt-7 text-[#f0f0f0]">
+      <h1 class="drop__shadow">Выявление патологий органов <br>грудной клетки</h1>
+    </div>
+
+    <div class="ct__window container">
+        <DicomViewer />
+    </div>
+    
+    <!-- Контейнер benefits -->
+    <div class="benefits__container shadow-lg flex flex-wrap gap-13">
+      <div class="benefits__item relative flex-1">
+        <img src="/icon1.png" alt="Overlay Image" class="overlay-image" />
+        <div class="benefits__tile">
+          <h3 class="inter__semibold text-[22px] mb-4">Automated CT <br>Anomaly Detection</h3>
+          <p class="text-[#ACACAC]">Detect pathologies and highlight suspicious regions</p>
+        </div>
+      </div>
+      <div class="benefits__item relative flex-1">
+        <img src="/icon2.png" alt="Overlay Image" class="overlay-image" />
+        <div class="benefits__tile">
+          <h3 class="inter__semibold text-[22px] mb-4">Ready-to-Use <br>DICOM Pipeline</h3>
+          <p class="text-[#ACACAC]">Clean, standardized, optimized for AI training</p>
+        </div>
+      </div>
+      <div class="benefits__item relative flex-1">
+        <img src="/icon3.png" alt="Overlay Image" class="overlay-image" />
+        <div class="benefits__tile">
+          <h3 class="inter__semibold text-[22px] mb-4">Open-source <br>code</h3>
+          <p class="text-[#ACACAC]">Powered by MONAI, open to collaboration, free to use</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="bg-[#29465b] text-white py-6 px-8 flex items-center justify-between">
+    <div class="text-sm">
+      <p>© 2025 A1Squad</p>
+      <p>All Rights Reserved</p>
+    </div>
+    <a href="https://github.com/your-repo" target="_blank" class="bg-white rounded-md p-2 hover:bg-gray-200 transition">
+      <img src="/github-icon.svg" alt="GitHub" class="w-6 h-6" />
+    </a>
+  </footer>
+</template>
+
