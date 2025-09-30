@@ -21,22 +21,22 @@ import DicomViewer from './DicomViewer.vue'
       <div class="benefits__item relative flex-1">
         <img src="/icon1.png" alt="Overlay Image" class="overlay-image" />
         <div class="benefits__tile">
-          <h3 class="inter__semibold text-[22px] mb-4">Automated CT <br>Anomaly Detection</h3>
-          <p class="text-[#ACACAC]">Detect pathologies and highlight suspicious regions</p>
+          <h3 class="inter__semibold text-[22px] mb-4">Автоматический Анализ <br>КТ-Исследований</h3>
+          <p class="text-[#ACACAC]">Определяйте наличие патологий, загрузив серии снимков пациента в 3D формате</p>
         </div>
       </div>
       <div class="benefits__item relative flex-1">
         <img src="/icon2.png" alt="Overlay Image" class="overlay-image" />
         <div class="benefits__tile">
-          <h3 class="inter__semibold text-[22px] mb-4">Ready-to-Use <br>DICOM Pipeline</h3>
-          <p class="text-[#ACACAC]">Clean, standardized, optimized for AI training</p>
+          <h3 class="inter__semibold text-[22px] mb-4">Готовый DICOM пайплайн</h3>
+          <p class="text-[#ACACAC]">Чистые, стандартизированные данные для обучения ИИ</p>
         </div>
       </div>
       <div class="benefits__item relative flex-1">
         <img src="/icon3.png" alt="Overlay Image" class="overlay-image" />
         <div class="benefits__tile">
-          <h3 class="inter__semibold text-[22px] mb-4">Open-source <br>code</h3>
-          <p class="text-[#ACACAC]">Powered by MONAI, open to collaboration, free to use</p>
+          <h3 class="inter__semibold text-[22px] mb-4">Открытый исходный код</h3>
+          <p class="text-[#ACACAC]">Работает на базе MONAI, открыт для сотрудничества, бесплатный для использования</p>
         </div>
       </div>
     </div>
@@ -47,7 +47,7 @@ import DicomViewer from './DicomViewer.vue'
       <p>© 2025 A1Squad</p>
       <p>All Rights Reserved</p>
     </div>
-    <a href="https://github.com/your-repo" target="_blank" class="bg-white rounded-md p-2 hover:bg-gray-200 transition">
+    <a href="https://github.com/Alyukin/AISight" target="_blank" class="bg-white rounded-md p-2 hover:bg-gray-200 transition">
       <img src="/github-icon.svg" alt="GitHub" class="w-6 h-6" />
     </a>
   </footer>
