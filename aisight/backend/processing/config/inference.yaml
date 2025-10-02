@@ -1,4 +1,4 @@
-model_path: "processing/extract/model/model1.pth"
+model_path: "processing/extract/model/model.pth"
 device: "cpu"
 threshold: 0.5
 
