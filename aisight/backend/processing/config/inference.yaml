@@ -9,4 +9,5 @@ processing:
   target_size: [128, 128, 128]
   batch_size: 1
   max_processing_time: 600 # 10 минут в секундах
+  
 
