@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import zipfile
 import os
 import tempfile
+import shutil
 from processing.scripts.inference import main
 
 app = FastAPI()
@@ -42,20 +43,24 @@ async def predict(zip_file: UploadFile = File(...)):
     try:
         extract_folder = extract_zip(zip_file)
         main()
-        xlsx_file_path = "processing/extract/output/list2.xlsx"
-        return {"file_path": f"/processing/extract/output/list2.xlsx"}
+        xlsx_file_path = "processing/extract/output/result.xlsx"
+        return {"file_path": f"/processing/extract/output/result.xlsx"}
+
 
     except Exception as e:
         return {"error": str(e)}
 
-@app.get("/processing/extract/output/list2.xlsx")
+@app.get("/processing/extract/output/result.xlsx")
 async def get_xlsx_file():
+    shutil.rmtree("./processing/extract/input/study/")
     return FileResponse(
-        "processing/extract/output/list2.xlsx", 
+        "processing/extract/output/result.xlsx", 
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
-        filename="list2.xlsx"
+        filename="result.xlsx"
+
     )
 
 @app.get("/")
 async def root():
     return {"message": "AI Sight API is running"}
+
