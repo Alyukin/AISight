@@ -44,6 +44,7 @@ async def predict(zip_file: UploadFile = File(...)):
         extract_folder = extract_zip(zip_file)
         main()
         xlsx_file_path = "processing/extract/output/result.xlsx"
+        shutil.rmtree("./processing/extract/input/study/")
         return {"file_path": f"/processing/extract/output/result.xlsx"}
 
 
@@ -52,7 +53,6 @@ async def predict(zip_file: UploadFile = File(...)):
 
 @app.get("/processing/extract/output/result.xlsx")
 async def get_xlsx_file():
-    shutil.rmtree("./processing/extract/input/study/")
     return FileResponse(
         "processing/extract/output/result.xlsx", 
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
