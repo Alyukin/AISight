@@ -20,6 +20,7 @@ cd AISight
 ```
 - #### Важно!
     Необходимо скачать model.pth из (https://github.com/Alyukin/AISight/releases/download/Download_model/model.pth) и поместить в /backend/processing/extract/model
+
 **Запустить Backend (локально)**  
 
 ```bash
