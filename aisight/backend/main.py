@@ -43,8 +43,9 @@ async def predict(zip_file: UploadFile = File(...)):
     try:
         extract_folder = extract_zip(zip_file)
         main()
-        xlsx_file_path = "processing/extract/output/list2.xlsx"
+        xlsx_file_path = "processing/extract/output/result.xlsx"
         return {"file_path": f"/processing/extract/output/result.xlsx"}
+
 
     except Exception as e:
         return {"error": str(e)}
@@ -56,8 +57,10 @@ async def get_xlsx_file():
         "processing/extract/output/result.xlsx", 
         media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", 
         filename="result.xlsx"
+
     )
 
 @app.get("/")
 async def root():
     return {"message": "AI Sight API is running"}
+

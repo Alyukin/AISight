@@ -1,7 +1,9 @@
 model_path: "processing/extract/model/model1.pth"
 device: "cpu"
 threshold: 0.5
+
 output_path: "processing/extract/output/result.xlsx"
+
 input_path: "processing/extract/input/study"
 root_dir: "/home/anerin/Загрузки/Telegram Desktop/Solution/processing"
 
@@ -9,5 +11,5 @@ processing:
   target_size: [128, 128, 128]
   batch_size: 1
   max_processing_time: 600 # 10 минут в секундах
-  
+
 
