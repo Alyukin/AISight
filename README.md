@@ -4,60 +4,55 @@
 
 AISight — это распределённое веб-приложение для задач компьютерного зрения с серверной частью на Python (FastAPI) и фронтендом на JavaScript (Vue). Проект предназначен для быстрого прототипирования сервисов, принимающих изображения/видео, запускающих ML-пайплайны и возвращающих результаты в виде файлов (например, Excel-таблицы с результатами анализа).
 
-> В репозитории присутствуют две основные части: `backend` (FastAPI) и `frontend` (Vue). Запуск возможен локально и через контейнеры.
-
 ---
 
 ## Основные возможности
 
-* API `/predict` принимает ZIP-архив с изображениями, запускает пайплайн анализа (`processing.scripts.inference.main`) и формирует файл с результатами `result.xlsx`.
-* API `/processing/extract/output/result.xlsx` позволяет скачать готовый результат.
+
+* API /predict принимает ZIP-архив с изображениями, запускает пайплайн анализа (processing.scripts.inference.main) и формирует файл с результатами result.xlsx.
+* API /processing/extract/output/result.xlsx позволяет скачать готовый результат.
 * Веб-интерфейс (Vue) для загрузки изображений и визуального контроля работы.
 * Простая структура проекта для добавления собственных ML-моделей и сервисов.
 
+---
+
 ## Ограничения
 
-* Производительность и масштабируемость зависят от конфигурации оборудования и выбранных моделей.
+* Масштабируемость и производительность зависят от аппаратного обеспечения и сложности пайплайна.
 
 ---
 
 ## Системные требования
 
-Минимальные:
-
-* Python 3.10+ (рекомендуется 3.10)
-* Node.js 16+ и npm
-* Git
-* Для запуска с Docker: Docker & docker-compose
-* Рекомендуется 8+ ГБ RAM (меньше — возможно, но медленнее)
+* Python 3.10+ (Рекомендуется 3.10)
+* Node.js 20+
+* npm
+* Docker и docker-compose (для контейнерного развёртывания)
+* Рекомендуется 8+ ГБ RAM
 
 ---
 
 ## Быстрый старт (Quick Start)
 
-1. **Клонировать репозиторий**
+### 1. Запуск без Docker
 
 ```bash
 git clone https://github.com/Alyukin/AISight.git
 cd AISight
 ```
 
-2. **Запустить backend (локально)**
+**Backend:**
 
 ```bash
 cd backend
 python3 -m venv venv
-# Linux/macOS
-source venv/bin/activate
-# Windows (PowerShell)
-# .\venv\Scripts\Activate.ps1
+source venv/bin/activate   # Linux/macOS
+# .\venv\Scripts\Activate.ps1   # Windows PowerShell
 pip install -r requirements.txt
 uvicorn main:app --reload --port 8000
 ```
 
-Backend по умолчанию будет слушать `http://127.0.0.1:8000`.
-
-3. **Запустить frontend (локально)**
+**Frontend:**
 
 ```bash
 cd ../frontend
@@ -65,16 +60,31 @@ npm install
 npm run dev
 ```
 
-Откройте в браузере адрес, который выдаст dev-сервер (обычно `http://localhost:5173`). Фронтенд должен общаться с бэкендом по API.
+Frontend будет доступен на `http://localhost:5173` и подключаться к backend (`http://localhost:8000`).
 
-4. **Пример использования API (curl)**
+### 2. Запуск с Docker Compose
 
 ```bash
-# Отправить ZIP-файл на анализ
+docker-compose up --build
+```
+
+* Backend будет доступен на `http://localhost:8000`
+* Frontend — на `http://localhost:5173`
+
+---
+
+## Примеры использования API
+
+Отправить ZIP‑файл на анализ:
+
+```bash
 curl -X POST "http://127.0.0.1:8000/predict" \
   -F "zip_file=@/path/to/archive.zip"
+```
 
-# Скачать результат
+Скачать результат:
+
+```bash
 curl -O "http://127.0.0.1:8000/processing/extract/output/result.xlsx"
 ```
 
@@ -85,135 +95,70 @@ curl -O "http://127.0.0.1:8000/processing/extract/output/result.xlsx"
 ```
 AISight/
 ├─ backend/                # серверная часть (FastAPI)
-│  ├─ main.py              # входная точка приложения
+│  ├─ main.py              # входная точка API
 │  ├─ requirements.txt     # зависимости Python
 │  └─ processing/          # пайплайны обработки и inference
 ├─ frontend/               # веб-интерфейс (Vue)
 │  ├─ package.json
 │  ├─ src/
-│  └─ ...
-├─ .gitattributes
-├─ .gitignore
-├─ Info.txt
+│  └─ dist/                # сборка фронтенда
+├─ docker-compose.yml      # запуск через Docker Compose
+├─ backend/Dockerfile      # Dockerfile для backend
+├─ frontend/Dockerfile     # Dockerfile для frontend
 └─ README.md               # этот файл
 ```
 
-**Описание ключевых файлов**
+**Эндпоинты backend:**
 
-* `backend/main.py` — точка старта FastAPI; определяет эндпоинты:
-
-  * `GET /` — проверка работоспособности API.
-  * `POST /predict` — принимает ZIP с изображениями, запускает inference и возвращает путь к файлу `result.xlsx`.
-  * `GET /processing/extract/output/result.xlsx` — отдаёт результат обработки.
-* `backend/requirements.txt` — список Python-зависимостей.
-* `frontend/package.json` — npm-скрипты и зависимости фронтенда.
-* `Info.txt` — дополнительная информация по проекту (если имеется).
+* `GET /` — проверка API.
+* `POST /predict` — принимает `zip_file`, запускает анализ, возвращает JSON с путём к результату.
+* `GET /processing/extract/output/result.xlsx` — отдаёт готовый Excel‑файл.
 
 ---
 
-## Руководство по развертыванию
+## Руководство по развёртыванию
 
-### 1) Локальное развёртывание (development)
+### Docker (рекомендуется)
 
-Следуйте шагам из раздела «Быстрый старт». Для удобства запуска можно использовать две отдельные терминальные сессии — для backend и frontend.
+В проекте уже есть Dockerfile для backend и frontend, а также `docker-compose.yml`.
 
-### 2) Производственное развёртывание (production)
+Запуск:
 
-Так как в проекте нет Dockerfile, можно использовать следующие шаблоны.
-
-#### Backend Dockerfile
-
-```dockerfile
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY backend/ ./
-
-RUN pip install --no-cache-dir -r requirements.txt
-
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+```bash
+docker-compose up --build
 ```
 
-#### Frontend Dockerfile
+Backend будет доступен на `http://localhost:8000`, Frontend — на `http://localhost:5173`.
 
-```dockerfile
-FROM node:18 as build
-WORKDIR /app
-COPY frontend/ ./
-RUN npm install && npm run build
+### Production-рекомендации
 
-FROM nginx:alpine
-COPY --from=build /app/dist /usr/share/nginx/html
-```
-
-#### docker-compose.yml
-
-```yaml
-version: '3.8'
-
-services:
-  backend:
-    build: 
-      context: .
-      dockerfile: ./backend/Dockerfile
-    ports:
-      - "8000:8000"
-    volumes:
-      - ./backend/processing:/app/processing
-
-  frontend:
-    build: 
-      context: .
-      dockerfile: ./frontend/Dockerfile
-    ports:
-      - "5173:80"
-```
+* Использовать **nginx** как обратный прокси перед backend и для отдачи статических файлов frontend.
+* Настроить переменные окружения (например, `CORS`, пути сохранения файлов, параметры моделей).
+* Запускать контейнеры через `docker-compose -d` или в Kubernetes.
 
 ---
 
 ## Руководство пользователя
 
-### Общие принципы
-
-1. Перейдите в веб-интерфейс (обычно `http://localhost:5173`).
-2. Загрузите ZIP-файл с изображениями через форму загрузки.
-3. Дождитесь обработки и скачайте `result.xlsx` с результатами анализа.
-
-### Примеры API-запросов
-
-* Проверить статус API:
-
-```bash
-curl http://127.0.0.1:8000/
-```
-
-* Запрос на анализ ZIP-файла:
-
-```bash
-curl -X POST "http://127.0.0.1:8000/predict" \
-  -F "zip_file=@test_data.zip"
-```
-
-* Скачать Excel с результатами:
-
-```bash
-curl -O "http://127.0.0.1:8000/processing/extract/output/result.xlsx"
-```
-
-### Советы по отладке
-
-* Если фронтенд не показывает результаты — проверьте в браузере консоль и вкладку Network.
-* Посмотрите логи backend (uvicorn) — там будут ошибки обработки.
-* Убедитесь, что CORS разрешает фронтенду доступ к backend (`http://localhost:5173`).
+1. Перейдите в браузере на `http://localhost:5173`.
+2. Загрузите ZIP‑архив с изображениями.
+3. Дождитесь обработки.
+4. Скачайте Excel‑файл `result.xlsx` с результатами анализа.
 
 ---
 
 ## Контрибьюция
 
-Если хотите помочь проекту:
+1. Форкните репозиторий и создайте ветку `feature/my-feature`.
+2. Внесите изменения, добавьте тесты.
+3. Откройте Pull Request.
 
-1. Форкните репозиторий и создайте ветку feature/my-feature.
-2. Сделайте изменения и добавьте тесты/инструкции.
-3. Откройте Pull Request с описанием изменений.
+---
+
+## API документация (сводка)
+
+* `GET /` → {"message": "AI Sight API is running"}
+* `POST /predict` → принимает `zip_file`, возвращает JSON с путём к результату.
+* `GET /processing/extract/output/result.xlsx` → отдаёт Excel‑файл.
 
 ---
