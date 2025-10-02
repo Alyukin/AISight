@@ -1,10 +1,11 @@
 <script setup>
 import { ref } from 'vue'
 
-// Состояние для файла и сообщений
+// Состояние для файла, сообщений и индикатора загрузки
 const file = ref(null)
 const responseMessage = ref('')
 const fileUrl = ref('')
+const isProcessing = ref(false)  // Состояние для отслеживания процесса обработки
 
 // Функция обработки выбора файла
 function handleFileChange(event) {
@@ -21,11 +22,11 @@ function handleFileChange(event) {
 async function uploadFile(selectedFile) {
   const formData = new FormData()
   formData.append('zip_file', selectedFile)
+  isProcessing.value = true
 
   try {
-    // Отправка файла на сервер FastAPI
+    // Отправка на FastAPI
     const response = await fetch('http://localhost:8000/predict', {
-      // Используем правильный адрес API
       method: 'POST',
       body: formData,
     })
@@ -44,6 +45,8 @@ async function uploadFile(selectedFile) {
     }
   } catch (error) {
     responseMessage.value = `Ошибка: ${error.message}`
+  } finally {
+    isProcessing.value = false
   }
 }
 </script>
@@ -65,14 +68,19 @@ async function uploadFile(selectedFile) {
         <div v-if="file" class="mt-4 text-center text-gray-700">Файл выбран: {{ file.name }}</div>
       </div>
     </label>
+    
+
     <div v-if="responseMessage">
       <p class="text-gray-800 text-[18px]">{{ responseMessage }}</p>
       <div
         class="dicom-export mt-6 mx-30 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300"
       >
-        <div class="flex flex-col justify-center items-center">
+        <div v-if="isProcessing" class="text-center">
+          <p class="text-gray-800 inter__bold text-[20px]">Обработка файла...</p>
+        </div>
+
+        <div v-if="!isProcessing && fileUrl" class="flex flex-col justify-center items-center">
           <a
-            v-if="fileUrl"
             :href="fileUrl"
             download="results.xlsx"
             class="text-gray-800 inter__bold text-[25px]"
@@ -81,5 +89,6 @@ async function uploadFile(selectedFile) {
         </div>
       </div>
     </div>
+
   </div>
 </template>
