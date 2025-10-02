@@ -1,7 +1,7 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 body {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   /* font-family: "Inter", sans-serif; */
   font-size: 18px;
   line-height: 1.5;
@@ -10,14 +10,14 @@ body {
 }
 
 .inter__bold {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-weight: 700;
   line-height: 1.25;
 }
 
 .inter__semibold {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-optical-sizing: auto;
   font-weight: 600;
   line-height: 1.25;
@@ -26,15 +26,12 @@ body {
 .app__section {
   min-height: 100vh;
   background-color: #1cb4b4;
-  background-image: 
-    url('/bg-leaves.png'),
-    linear-gradient(to bottom, #1cb4b4 0%, #00d4b0 100%);
+  background-image: url('/bg-leaves.png'), linear-gradient(to bottom, #1cb4b4 0%, #00d4b0 100%);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   padding: 20px 10px 60px;
 }
-
 
 .container {
   max-width: 1200px;
@@ -56,10 +53,16 @@ body {
 }
 
 .dicom-viewer {
-  min-height: 650px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  background-color: rgba(255, 255, 255, 0.65);
+}
+
+.dicom-export {
+  padding-top: 25px;
+  padding-bottom: 30px;
   background-color: rgba(255, 255, 255, 0.65);
 }
 
@@ -75,7 +78,7 @@ body {
   width: 7.5rem;
   height: 7.5rem;
   margin-bottom: 2.5rem;
-  margin-top: 3.5rem;
+  margin-top: 3rem;
   -webkit-user-drag: none;
   user-select: none;
   margin-left: auto;
@@ -85,7 +88,7 @@ body {
 /* Benefits Container */
 .benefits__container {
   background-color: rgba(255, 255, 255, 0.65);
-  max-width: 1200px;  
+  max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 150px;
@@ -120,4 +123,3 @@ body {
   width: auto;
   height: 180px;
 }
-

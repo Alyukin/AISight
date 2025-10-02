@@ -1,1 +1,6 @@
-1. Заменить пример UNet на обученную MONAI модель
+в backend
+source venv/bin/activate
+uvicorn main:app --reload --port 8000
+
+в frontend
+npm run dev
