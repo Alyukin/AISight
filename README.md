@@ -20,7 +20,8 @@ cd AISight
 ```
 
 **Запустить Backend (локально)**  
-Необходимо скачать model.pth из Диска(link) и поместить в /backend/processing/extract/model
+Необходимо скачать model.pth из (https://github.com/Alyukin/AISight/releases/download/Download_model/model.pth) и поместить в /backend/processing/extract/model
+
 ```bash
 cd backend
 python3 -m venv venv
